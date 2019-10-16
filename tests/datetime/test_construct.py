@@ -1,6 +1,7 @@
 import os
 import pytz
 
+from freezegun import freeze_time
 import pendulum
 import pytest
 
@@ -98,6 +99,46 @@ def test_now():
     in_paris = pendulum.now("Europe/Paris")
 
     assert now.hour != in_paris.hour
+
+
+@freeze_time('2016-03-27 00:30:00')
+def test_now_dls_off():
+    utc = pendulum.now('UTC')
+    in_paris = pendulum.now("Europe/Paris")
+    in_paris_from_utc = utc.in_tz('Europe/Paris')
+    assert in_paris.hour == 1
+    assert not in_paris.is_dst()
+    assert in_paris.isoformat() == in_paris_from_utc.isoformat()
+
+
+@freeze_time('2016-03-27 01:30:00')
+def test_now_dls_transitioning_on():
+    utc = pendulum.now('UTC')
+    in_paris = pendulum.now("Europe/Paris")
+    in_paris_from_utc = utc.in_tz('Europe/Paris')
+    assert in_paris.hour == 3
+    assert in_paris.is_dst()
+    assert in_paris.isoformat() == in_paris_from_utc.isoformat()
+
+
+@freeze_time('2016-10-30 00:30:00')
+def test_now_dls_on():
+    utc = pendulum.now('UTC')
+    in_paris = pendulum.now("Europe/Paris")
+    in_paris_from_utc = utc.in_tz('Europe/Paris')
+    assert in_paris.hour == 2
+    assert in_paris.is_dst()
+    assert in_paris.isoformat() == in_paris_from_utc.isoformat()
+
+
+@freeze_time('2016-10-30 01:30:00')
+def test_now_dls_transitioning_off():
+    utc = pendulum.now('UTC')
+    in_paris = pendulum.now("Europe/Paris")
+    in_paris_from_utc = utc.in_tz('Europe/Paris')
+    assert in_paris.hour == 2
+    assert not in_paris.is_dst()
+    assert in_paris.isoformat() == in_paris_from_utc.isoformat()
 
 
 def test_now_with_fixed_offset():
