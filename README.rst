@@ -1,6 +1,8 @@
 Pendulum
 ########
 
+**NOTE: This is a fork off of pendulum (https://github.com/sdispater/pendulum)**
+
 .. image:: https://img.shields.io/pypi/v/pendulum.svg
     :target: https://pypi.python.org/pypi/pendulum
 
