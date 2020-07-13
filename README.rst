@@ -1,6 +1,15 @@
 Pendulum
 ########
 
+**NOTE: This is a fork off of pendulum (https://github.com/sdispater/pendulum)**
+The fork includes a few miscellaneous fixes. We currently publish it as jyve-pendulum.
+
+To make a new version, do:
+
+1. poetry version prerelease
+2. poetry build
+3. poetry publish -r jyve
+
 .. image:: https://img.shields.io/pypi/v/pendulum.svg
     :target: https://pypi.python.org/pypi/pendulum
 
